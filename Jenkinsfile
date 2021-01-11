@@ -5,6 +5,8 @@ node() {
         notifyBuild('STARTED')
         def passthruString = sh(script: "printenv", returnStdout: true)
         passthruString = passthruString.replaceAll('\n',' ')
+        def paramsString = params.toString().replaceAll("[\\[\\](){}]","")
+        paramsString = paramsString.replaceAll(', ',' ')
         def HUDSON_URL = "${env.HUDSON_URL}"
         def SERVER_JENKINS = ""
         if (HUDSON_URL.contains("10.88.48.21")) {
@@ -45,8 +47,7 @@ node() {
            // echo "\n\n\n env.User_Pass_Json = ${env.User_Pass_Json}\n\n\n"
         }
         stage("AWX Runner") {
-            def awx_output = sh(script: "python3 ${orchPy}", returnStdout: true)
-            echo "\n\n\n (( all jenkins_parameters provided via printenv/set ))"
+            def awx_output = sh(script: "python3 ${orchPy} ${paramsString}", returnStdout: true)
             echo "${awx_output}"
         }
         stage("BDD-Behave") {
@@ -73,7 +74,7 @@ node() {
         }
         stage('Import results to Xray') {
             echo "*** Import Results to XRAY ***"
-            def description = "Jenkins Project: ${env.JOB_NAME}\\n\\nTest Report: [${env.JOB_NAME}-Link|${env.BUILD_URL}/cucumber-html-reports/overview-features.html]\\n\\nJenkins Variables:\\n${passthruString}" 
+            def description = "Jenkins Project: ${env.JOB_NAME}\\n\\nTest Report: [${env.JOB_NAME}-Link|${env.BUILD_URL}/cucumber-html-reports/overview-features.html]\\n\\nINPUTS:\\n${paramsString}" 
             def labels = '["regression","automated_regression"]'
             def environment = "DEV"
             def testExecutionFieldId = 10552
