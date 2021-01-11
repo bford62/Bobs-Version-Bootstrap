@@ -1,0 +1,14 @@
+---
+- name: Get Device Facts
+  hosts: all
+  roles:
+    - Juniper.junos
+  gather_facts: yes
+  connection: local
+
+  tasks:
+    - name: Retrieve facts from device running Junos OS
+      juniper_junos_facts:
+    - name: Print version
+      debug:
+        var: junos.version

@@ -1,0 +1,19 @@
+---
+- name: Run local expect script via shell
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: CLONE THE ARC-SHARED REPO
+    git:
+      repo: "{{ GIT_SHARED_LIB }}"
+      dest: ./lib/shared_libs/
+    register: git_response
+  - name: "Print result"
+    debug:
+      var: git_response
+  - name: Run local expect script via shell
+    command: expect ./src/ts_show.tcl --lx_ip {{ lx_ip }} --lx_port {{ lx_port }} --cidr {{ cidr }} --User_Pass_Json {{ User_Pass_Json  }}
+    register: response
+  - name: "Print result"
+    debug:
+      var: response
