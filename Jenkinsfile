@@ -5,9 +5,9 @@ node() {
         notifyBuild('STARTED')
         def passthruString = sh(script: "printenv", returnStdout: true)
         passthruString = passthruString.replaceAll('\n',' ')
-        passthruString = passthruString.replaceAll(' ','\\n')
-        def paramsString = params.toString().replaceAll("[\\[\\](){}]","")
-        paramsString = paramsString.replaceAll(', ','\\n')
+        def paramsString1 = params.toString().replaceAll("[\\[\\](){}]","")
+        paramsString = paramsString1.replaceAll(', ',' ')
+        def paramsStringXray = formatXray(paramsString1, ', ')
         def HUDSON_URL = "${env.HUDSON_URL}"
         def SERVER_JENKINS = ""
         if (HUDSON_URL.contains("10.88.48.21")) {
