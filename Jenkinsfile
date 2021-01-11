@@ -116,6 +116,13 @@ node() {
         notifyBuild(currentBuild.result)
     }
 }
+def formatXray(input_string, String delimiter = "\n") {
+    result = ""
+    for(line in input_string.split(delimiter)) {
+        result = result + "\\n" + line
+    }
+    return result
+}
 def notifyBuild(String buildStatus = 'STARTED') {
     // build status of null means successful
     buildStatus =  buildStatus ?: 'SUCCESSFUL'
