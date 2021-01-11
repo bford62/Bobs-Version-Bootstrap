@@ -7,8 +7,7 @@ node() {
         passthruString = passthruString.replaceAll('\n',' ')
         passthruString = passthruString.replaceAll(' ','\\n')
         def paramsString = params.toString().replaceAll("[\\[\\](){}]","")
-        paramsString = paramsString.replaceAll(', ',' ')
-        paramsString = paramsString.replaceAll(' ','\\n')
+        paramsString = paramsString.replaceAll(', ','\\n')
         def HUDSON_URL = "${env.HUDSON_URL}"
         def SERVER_JENKINS = ""
         if (HUDSON_URL.contains("10.88.48.21")) {
