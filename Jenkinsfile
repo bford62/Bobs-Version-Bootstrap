@@ -73,7 +73,7 @@ node() {
         }
         stage('Import results to Xray') {
             echo "*** Import Results to XRAY ***"
-            def description = "Jenkins Project: ${env.JOB_NAME}\\n[Test Report Link|${env.BUILD_URL}/cucumber-html-reports/overview-features.html]\\nJenkins Variables:\\n${passthruString}" 
+            def description = "Jenkins Project: ${env.JOB_NAME}\\n\\nTest Report: [${env.JOB_NAME}-Link|${env.BUILD_URL}/cucumber-html-reports/overview-features.html]\\n\\nJenkins Variables:\\n${passthruString}" 
             def labels = '["regression","automated_regression"]'
             def environment = "DEV"
             def testExecutionFieldId = 10552
